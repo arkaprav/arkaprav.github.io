@@ -1,0 +1,182 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH and moisture sensor values</title>
+    <style>
+        *{
+            margin:0px;
+            padding: 0px;
+        }
+        header{
+            position:fixed;
+            top:0%;
+            box-shadow:  5px 5px 5px rgb(203, 203, 203);
+            width:100%;
+            height:50px;
+            background-color:white;
+            color:#343434
+        }
+        .middle{
+            padding: 80px 250px;
+        }
+        div#table table{
+            margin:10px 150px;
+            border: 2px solid rgb(200, 200, 200);
+            border-radius: 20px;
+        }
+        div#table table th{
+            background-color: rgb(206, 206, 206);
+        }
+        div#table table td{
+            background-color: rgb(233, 233, 233);
+        }
+        div#table table thead,
+        div#table table tr{
+            text-align: center;
+        }
+        div#table table th,
+        div#table table td{
+            margin:0px;
+            width:250px;
+            height:30px;
+            border-radius: 16px;
+        }
+        .images{
+            display: block;
+            margin: 0px 230px;
+        }
+        .images div{
+            display: block;
+            padding: 30px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        a:hover {
+            color: rgb(70, 70, 70);
+        }
+        footer{
+            height: 150px;
+            background-color: #e4e4e4;
+            display:inline-flex;
+            padding:50px;
+        }
+        footer div {
+            padding: 10px 80px;
+            font-size: 22px;
+        }
+        footer div * {
+            padding: 5px 0px;
+        }
+    </style>
+</head>
+<header>
+    <div>
+        <center>
+            <h1>pH and Moisture tracking Platform</h1>
+        </center>
+        <div style="float: right; margin-top: -25px; margin-right: 45px;">
+            <p><a href="https://thingspeak.com/channels/2156931">Go to ThingSpeak</a></p>
+        </div>
+    </div>
+</header>
+<body>
+    <div class="middle">
+        <div><center><h2>Latest values of Ph and Moisture</h2></center></div>
+        <div id="table">
+        </div>
+        <div class="images">
+            <div>
+                <label for="moist"><h3 style="margin:0px 0px 0px 170px;">Moisture Graph</h3></label><br>
+                <iframe name="moist" width="500" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2156931/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Moisture&type=line&xaxis=time%28s%29&yaxis=Moisture+in+mL"></iframe>
+            </div>
+            <div>
+                <label for="pH"><h3 style="margin:0px 0px  0px 200px;">pH Graph</h3></label><br>
+                <iframe name="pH" width="500" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2156931/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=pH+Scale&type=line&xaxis=time%28s%29&yaxis=pH+Value+%28pH%29"></iframe>
+            </div>
+        </div>
+    </div>
+    <script>
+        const URL = "https://api.thingspeak.com/channels/2156931/feeds.json?results=10";
+        async function makeAPIcall(){
+            var moist = [];
+            var pH = [];
+            let http = new XMLHttpRequest();
+            http.open('get',URL,true);
+            http.send();
+            http.onload = function(){
+                let feed = JSON.parse(this.responseText);
+                for(i=0;i<10;i++){
+                    moist.push(parseInt(feed['feeds'][i]['field1']));
+                    pH.push(parseFloat(feed['feeds'][i]['field2'].replace(/(\r\n|\n|\r)/gm, '')));
+                }
+                let table = document.getElementById('table');
+                let s = `
+                    <table>
+                        <thead>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                moisture
+                            </th>
+                            <th>
+                                pH Value
+                            </th>
+                        </thead>
+                        <tbody>
+                `;
+                for(i = 0; i<10; i++){
+                    s += `
+                        <tr>
+                            <td>
+                                ${i+1}
+                            </td>
+                            <td>
+                                ${moist[i]}
+                            </td>
+                            <td>
+                                ${pH[i]}
+                            </td>
+                        </tr>
+                    `;
+                }
+                s+=`
+                        </tbody>
+                    </table>
+                `;     
+                table.innerHTML = s;
+            }
+        }
+        var myVar = setInterval(makeAPIcall(), 15000);
+    </script>
+</body>
+<footer>
+    <div class="devnames">
+        <h5>Developers Names</h5>
+        <p>Arkaprava Chakraborty</p>
+        <p>Soumya Bhattacharya</p>
+        <p>Rajdeep Das</p>
+    </div>
+    <div class="emails">
+        <h5>Emails</h5>
+        <a href="mailto:chakraarkaprava@gmail.com"><p>chakraarkaprava@gmail.com</p></a>
+        <a href="mailto:soumyabhattacharya.2001@gmail.com"><p>soumyabhattacharya.2001@gmail.com</p></a>
+        <a href="mailto:rajdeepdas442@gmail.com"><p>rajdeepdas442@gmail.com</p></a>
+    </div>
+    <div class="call">
+        <h5>Phone No.s</h5>
+        <a href="tel:+918585859890"><p>8585859890</p></a>
+        <a href="tel:+918981830604"><p>8981830604</p></a>
+        <a href="tel:+918420003243"><p>8420003243</p></a>
+    </div>
+    <div class="call">
+        <h5>Developer's Institute</h5>
+        <a href="https://rcciit.org/"><p>RCC Institute of Technology</p></a>
+        <p><a href="https://thingspeak.com/channels/2156931">ThingSpeak</a></p>
+    </div>
+</footer>
+</html>
