@@ -124,7 +124,7 @@ footer div * {
         margin: 0px 20px;
     }
     iframe{
-        width:390px;
+        width:100%;
     }
     h5{
         font-size:80%;
