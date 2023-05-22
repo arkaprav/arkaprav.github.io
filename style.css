@@ -1,0 +1,135 @@
+*{
+    margin:0px;
+    padding: 0px;
+    overflow-x:hidden;
+}
+header{
+    position:fixed;
+    top:0%;
+    box-shadow:  5px 5px 8px rgb(203, 203, 203);
+    width:100%;
+    height:50px;
+    background-color:white;
+    color:#343434
+}
+div .link{
+    float: right; 
+    margin-top: -25px; 
+    margin-right: 45px;
+}
+.middle{
+    padding: 80px 250px;
+}
+div#table table{
+    margin:10px 150px;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 20px;
+}
+div#table table th{
+    background-color: rgb(206, 206, 206);
+}
+div#table table td{
+    background-color: rgb(233, 233, 233);
+}
+div#table table thead,
+div#table table tr{
+    text-align: center;
+}
+div#table table th,
+div#table table td{
+    margin:0px;
+    width:250px;
+    height:30px;
+    border-radius: 16px;
+}
+.images{
+    display: block;
+    margin: 0px 230px;
+}
+.images div{
+    display: block;
+    padding: 30px;
+}
+.moist label h3 {
+    margin:0px 0px 0px 170px;
+}
+.pH label h3 {
+    margin:0px 0px  0px 200px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color: rgb(70, 70, 70);
+}
+footer{
+    height: 180px;
+    overflow-x: hidden;
+    background-color: #e4e4e4;
+    display:inline-flex;
+    padding: 50px 40px;
+}
+footer div {
+    padding: 10px 10px;
+    margin: 0px 55px;
+    font-size: 22px;
+}
+footer div * {
+    padding: 5px 0px;
+}
+@media screen and (max-width: 700px) {
+    div .link{
+        display:none;
+        visibility: hidden;
+    }
+    header{
+        width:fit-content;
+        height:3.5%;
+        padding: 1% 24.7%;
+    }
+    h1{
+        font-size: 100%;
+        width: fit-content;
+    }
+    h2{
+        font-size: 100%;
+    }
+    .middle{
+        padding:12% 5%;
+    }
+    div#table table{
+        margin: 1% 5%;
+    }
+    .images {
+        margin: 0px 20px;
+    }
+    .images div {
+        padding: 10px 0px;
+    }
+    .moist label h3{
+        margin: 0px 0px 0px 33%;
+        font-size: 100%;
+    }
+    .pH label h3{
+        margin:0px 0px 0px 37.5%;
+        font-size: 100%;
+    }
+    footer{
+        display: block;
+        height: max-content;
+        padding: 10px 20px;
+    }
+    footer div {
+        margin: 0px 20px;
+    }
+    iframe{
+        width:390px;
+    }
+    h5{
+        font-size:80%;
+    }
+    p{
+        font-size: 70%;
+    }
+}

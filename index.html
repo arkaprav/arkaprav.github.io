@@ -3,84 +3,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
     <title>pH and moisture sensor values</title>
-    <style>
-        *{
-            margin:0px;
-            padding: 0px;
-        }
-        header{
-            position:fixed;
-            top:0%;
-            box-shadow:  5px 5px 5px rgb(203, 203, 203);
-            width:100%;
-            height:50px;
-            background-color:white;
-            color:#343434
-        }
-        .middle{
-            padding: 80px 250px;
-        }
-        div#table table{
-            margin:10px 150px;
-            border: 2px solid rgb(200, 200, 200);
-            border-radius: 20px;
-        }
-        div#table table th{
-            background-color: rgb(206, 206, 206);
-        }
-        div#table table td{
-            background-color: rgb(233, 233, 233);
-        }
-        div#table table thead,
-        div#table table tr{
-            text-align: center;
-        }
-        div#table table th,
-        div#table table td{
-            margin:0px;
-            width:250px;
-            height:30px;
-            border-radius: 16px;
-        }
-        .images{
-            display: block;
-            margin: 0px 230px;
-        }
-        .images div{
-            display: block;
-            padding: 30px;
-        }
-        a{
-            text-decoration: none;
-            color: black;
-        }
-        a:hover {
-            color: rgb(70, 70, 70);
-        }
-        footer{
-            height: 150px;
-            overflow-x: hidden;
-            background-color: #e4e4e4;
-            display:inline-flex;
-            padding: 50px 40px;
-        }
-        footer div {
-            padding: 10px 10px;
-            margin: 0px 55px;
-            font-size: 22px;
-        }
-        footer div * {
-            padding: 5px 0px;
-        }
-    </style>
 </head>
 <header>
     <div>
         <center>
             <h1>pH and Moisture tracking Platform</h1>
         </center>
-        <div style="float: right; margin-top: -25px; margin-right: 45px;">
+        <div class="link">
             <p><a href="https://thingspeak.com/channels/2156931">Go to ThingSpeak</a></p>
         </div>
     </div>
@@ -91,70 +23,20 @@
         <div id="table">
         </div>
         <div class="images">
-            <div>
-                <label for="moist"><h3 style="margin:0px 0px 0px 170px;">Moisture Graph</h3></label><br>
-                <iframe name="moist" width="500" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2156931/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Moisture&type=line&xaxis=time%28s%29&yaxis=Moisture+in+mL"></iframe>
+            <div class="moist">
+                <label for="moist"><h3>Moisture Graph</h3></label><br>
+                <figure>
+                    <iframe name="moist" width="480" height="260" style="border: 1px solid #cccccc;overflow:auto;" src="https://thingspeak.com/channels/2156931/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Moisture&type=line&xaxis=time%28s%29&yaxis=Moisture+in+mL" allowfullscreen="true"></iframe>
+                </figure>
             </div>
-            <div>
-                <label for="pH"><h3 style="margin:0px 0px  0px 200px;">pH Graph</h3></label><br>
-                <iframe name="pH" width="500" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2156931/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=pH+Scale&type=line&xaxis=time%28s%29&yaxis=pH+Value+%28pH%29"></iframe>
+            <div class="pH">
+                <label for="pH"><h3>pH Graph</h3></label><br>
+                <figure> 
+                    <iframe name="pH" width="480" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2156931/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=pH+Scale&type=line&xaxis=time%28s%29&yaxis=pH+Value+%28pH%29"></iframe>
+                </figure>
             </div>
         </div>
     </div>
-    <script>
-        const URL = "https://api.thingspeak.com/channels/2156931/feeds.json?results=10";
-        async function makeAPIcall(){
-            var moist = [];
-            var pH = [];
-            let http = new XMLHttpRequest();
-            http.open('get',URL,true);
-            http.send();
-            http.onload = function(){
-                let feed = JSON.parse(this.responseText);
-                for(i=0;i<10;i++){
-                    moist.push(parseInt(feed['feeds'][i]['field1']));
-                    pH.push(parseFloat(feed['feeds'][i]['field2'].replace(/(\r\n|\n|\r)/gm, '')));
-                }
-                let table = document.getElementById('table');
-                let s = `
-                    <table>
-                        <thead>
-                            <th>
-                                Id
-                            </th>
-                            <th>
-                                moisture
-                            </th>
-                            <th>
-                                pH Value
-                            </th>
-                        </thead>
-                        <tbody>
-                `;
-                for(i = 0; i<10; i++){
-                    s += `
-                        <tr>
-                            <td>
-                                ${i+1}
-                            </td>
-                            <td>
-                                ${moist[i]}
-                            </td>
-                            <td>
-                                ${pH[i]}
-                            </td>
-                        </tr>
-                    `;
-                }
-                s+=`
-                        </tbody>
-                    </table>
-                `;     
-                table.innerHTML = s;
-            }
-        }
-        var myVar = setInterval(makeAPIcall(), 15000);
-    </script>
 </body>
 <footer>
     <div class="devnames">
@@ -182,3 +64,44 @@
     </div>
 </footer>
 </html>
+
+<!-- <!DOCTYPE html>
+<html> 
+<head> 
+    <title> 
+        How to change the width of an 
+        iframe to 100% with JavaScript? 
+    </title> 
+</head> 
+     
+<body> 
+    <center>
+        <h1 style="color:green;"> 
+            GeeksforGeeks  
+        </h1> 
+        <h3> 
+            How to change the width of a <br>
+            to 100% with JavaScript? 
+        </h3> 
+        <iframe id="iframe" height="100%" width="40%"
+            src="https://www.youtube.com/embed/HzeK7g8cD0Y"
+            frameborder="0" allowfullscreen> 
+        </iframe>
+  
+        <br><br> 
+        <button> 
+            Click to change 
+        </button> 
+          
+        <script> 
+            // JavaScript code to change the 
+            // width to 100% of <iframe> 
+            function changewidth() { 
+                var x = document.getElementById('iframe'); 
+                x.style.width = window.innerWidth; 
+            }
+            changewidth();
+        </script> 
+    </center>
+</body>  
+</html> -->
